@@ -1,51 +1,141 @@
-# Welcome to your Expo app 👋
+# Swifty Companion
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Swifty Companion est une application mobile permettant de rechercher les profils des étudiants de l'école 42 via l’API officielle. L’application affiche les informations essentielles d’un utilisateur : login, email, niveau, compétences, projets et coalition.
 
-## Get started
+---
 
-1. Install dependencies
+## Description
 
-   ```bash
-   npm install
-   ```
+L’application comporte :
 
-2. Start the app
+- Une authentification OAuth2 via l’API 42.
+- Un écran de recherche permettant d’entrer un login.
+- Un écran de profil affichant toutes les informations de l’utilisateur.
+- Une gestion complète des erreurs (login introuvable, réseau, token expiré…).
+- Une interface responsive compatible avec différents formats d’écran.
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## Stack technique
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+* **Framework mobile** : React Native (`react-native` 0.81.4)
+* **Environnement de développement** : Expo (`expo` 54.0.13)
+* **Auth & API** : API officielle 42 (OAuth2)
+* **Backend proxy** : Node.js + Express (gestion OAuth2 et communication avec l’API 42)
+* **Styling** : StyleSheet React Native
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+---
 
-## Get a fresh project
+## Structure du projet
 
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+swifty-companion/
+├── app/                         # Écrans et navigation de l'application (Expo / React Native)
+│   ├── index.tsx                # Point d'entrée de l'application
+│   ├── _layout.tsx              # Layout global Expo Router
+│   └── screens/                 # Écrans principaux
+│       ├── LoadingScreen.tsx    # Écran de chargement
+│       ├── LoginScreen.tsx      # Écran de connexion / OAuth2
+│       ├── ProfileScreen.tsx    # Profil détaillé de l'utilisateur
+│       └── SearchScreen.tsx     # Recherche par login
+│
+├── assets/                      # Ressources statiques
+│
+├── components/                  # Composants UI réutilisables
+│   ├── ProfileHeader.tsx
+│   ├── ProjectsTabs.tsx
+│   ├── ResponsiveLayout.tsx
+│   ├── ScrollableSection.tsx
+│   └── SkillList.tsx
+│
+├── lib/                         # Fonctions utilitaires et appels API
+│   ├── auth.ts                  # Gestion OAuth2 (front)
+│   ├── getCoalition.ts          # Récupération des coalitions utilisateur
+│   ├── getUser.ts               # Récupération du profil utilisateur
+│   └── profileUtils.ts          # Fonctions d'aide liées au profil utilisateur
+│
+├── server/                      # Backend Express (proxy sécurisé pour API 42)
+│
+├── default.env                  
+├── package.json                 
+└── tsconfig.json               
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## Fonctionnalités
 
-To learn more about developing your project with Expo, look at the following resources:
+- Authentification OAuth2 via l’API 42.
+- Recherche d’un utilisateur par login.
+- Gestion des erreurs et des états de chargement.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Backend (`server/`)
+- Gestion complète du flux OAuth2.
+- Proxy sécurisé vers l’API 42.
+- Appels API centralisés (login, récupération des données utilisateur).
+- Rafraîchissement automatique du token (bonus du sujet).
 
-## Join the community
+### Frontend (`app/`)
+- Navigation entre les différents écrans.
+- Composants UI réutilisables.
+- Mise en page responsive adaptée à tous les types d’écrans.
+- Affichage détaillé : login, email, mobile, niveau, progression, compétences, photo, coalition, projets.
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-# swifty-companion
+## Installation
+
+### 1. Cloner le projet
+```bash
+git clone git@github.com:amelmnd/swifty-companion.git
+cd swifty-companion
+```
+
+### 2. Installer les dépendances
+```bash
+npm install
+```
+
+### 3. Configurer les variables d’environnement
+Ce projet utilise deux fichiers `.env` distincts :
+- un fichier pour le front (Expo / React Native)
+- un fichier pour le serveur backend (proxy sécurisé OAuth2)
+
+
+**Front (.env)**
+```javascript
+EXPO_PUBLIC_BACKEND_URL= 
+//URL locale du backend
+```
+
+**Backend (server/.env)**
+```javascript
+CLIENT_ID=client_id_intra_42
+CLIENT_SECRET=client_secret_intra_42
+
+//URL publique utilisée pour OAuth2
+BACKEND_BASE_URL=url_backend
+PORT=port_backend
+
+//L’URL de redirection enregistrée sur l’intra
+REDIRECT_URI=BACKEND_BASE_URL:PORT/callback
+
+//exemple : http://192.168.1.43:3001/callback
+```
+
+
+### 4. Lancer l’application
+```bash
+npm start
+```
+
+## Aperçu du rendu
+
+_rendu a venir_
+
+
+---
+
+## 📜 Licence
+
+Projet réalisé dans le cadre du cursus 42.
