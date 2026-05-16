@@ -124,14 +124,30 @@ REDIRECT_URI=BACKEND_BASE_URL:PORT/callback
 ```
 
 
-### 4. Lancer l’application
+**Lancer le backend**
+Le backend doit etre lance avant le front, sinon l'application ne pourra pas contacter l'API 42.
+
+```bash
+npm run backend
+```
+
+**Lancer le front**
 ```bash
 npm start
 ```
 
 ## Aperçu du rendu
 
-_rendu a venir_
+<div align="center">
+
+<img src="./readmeImg/Login.png" width="30%">
+<img src="./readmeImg/SearchScreen.png" width="30%">
+<img src="./readmeImg/ProfilTop.png" width="30%">
+<img src="./readmeImg/ProjectDone.png" width="30%">
+<img src="./readmeImg/ProjectFail.png" width="30%">
+<img src="./readmeImg/ProjectInProgress.png" width="30%">
+
+</div>
 
 
 ---
